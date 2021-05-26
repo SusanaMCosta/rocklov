@@ -4,8 +4,11 @@ Dado('que acesso a página de cadastro') do
 end
   
 Quando('submeto o meu cadastro completo') do
+
+    MongoDB.new.remove_user("susana@susana.com")
+
     find("#fullName").set "Susana Moreira"
-    find("#email").set Faker::Internet.free_email
+    find("#email").set "susana@susana.com"
     find("#password").set "123"
 
     click_button "Cadastrar"
@@ -17,7 +20,7 @@ end
   
 
 Quando('submeto o meu cadastro sem o nome') do
-    find("#email").set Faker::Internet.free_email
+    find("#email").set "susana@susana.com"
     find("#password").set "123"
 
     click_button "Cadastrar"
@@ -39,7 +42,6 @@ end
 Então('vejo a mensagem de alerta: Oops. Informe um email válido!') do
     alert = find(".alert-dark")
     expect(alert.text).to eql "Oops. Informe um email válido!"
-    sleep 10
 end
 
 Quando('submeto o meu cadastro com email incorreto') do
@@ -60,7 +62,6 @@ end
 Então('vejo a mensagem de alerta: Oops. Informe sua senha secreta!') do
     alert = find(".alert-dark")
     expect(alert.text).to eql "Oops. Informe sua senha secreta!"
-    sleep 10
 end
   
   
